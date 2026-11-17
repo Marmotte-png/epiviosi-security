@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EPIVÍOSI SECURITY</title>
+<style>
+  :root { --bg: #0b1826; --fg: #f1ede4; --accent: #e8b04b; --muted: #7fa6c4; --card: #ffffff0d; }
+  body { margin: 0; background: var(--bg); color: var(--fg);
+         font: 16px/1.55 system-ui, sans-serif; }
+  main { max-width: 50rem; margin: 0 auto; padding: 2rem 1rem 3rem; }
+  h1 { color: var(--accent); letter-spacing: .04em; margin-bottom: .2rem; }
+  h2 { color: var(--accent); border-top: 1px solid #ffffff22; padding-top: 1.2rem; }
+  h3 { margin-bottom: .3rem; }
+  .sub { color: var(--muted); margin-top: 0; }
+  .card { background: var(--card); border-radius: 8px; padding: .2rem 1rem .6rem; margin: .8rem 0; }
+  .warn { border-left: 3px solid var(--accent); padding-left: .8rem; }
+  code, kbd { background: #ffffff14; padding: .1em .35em; border-radius: 4px; }
+  a { color: var(--accent); }
+  nav a { margin-right: 1rem; }
+  ol li, ul li { margin-bottom: .3rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>EPIVÍOSI SECURITY</h1>
+  <p class="sub">Chiffrement, vie privée et documentation, sans connexion. · Encryption, privacy and documentation, offline.</p>
+  <nav><a href="#fr">Français</a><a href="#en">English</a></nav>
+
+  <section id="fr" lang="fr">
+  <h2>Français</h2>
+
+  <div class="card">
+  <h3>Créer une clé USB ou un disque chiffré</h3>
+  <ol>
+    <li>Menu → <strong>Disques</strong> (GNOME Disques), choisir la clé.</li>
+    <li>Sélectionner la partition → icône ⚙ → <strong>Formater la partition…</strong></li>
+    <li>Type : <strong>Disque interne à utiliser avec les systèmes Linux uniquement (Ext4)</strong>
+      et cocher <strong>Volume protégé par mot de passe (LUKS)</strong>.</li>
+    <li>Choisir une phrase de passe longue (plusieurs mots), puis valider.</li>
+  </ol>
+  <p>Une fois branchée, la clé demande sa phrase de passe dans le gestionnaire de fichiers.
+  En ligne de commande : <code>cryptsetup</code>.</p>
+  </div>
+
+  <div class="card">
+  <h3>Chiffrer un fichier ou un dossier</h3>
+  <ul>
+    <li><strong>Picocrypt</strong> (le plus simple) : glisser le fichier, choisir un mot de passe,
+      <em>Encrypt</em>. Produit un fichier <code>.pcv</code>, à déchiffrer avec Picocrypt.</li>
+    <li><strong>GPA</strong> (GnuPG) : chiffrer pour une personne avec sa clé publique, ou signer.</li>
+    <li><strong>age</strong>, en terminal : <code>age -p -o secret.age fichier</code> puis
+      <code>age -d -o fichier secret.age</code>.</li>
+  </ul>
+  </div>
+
+  <div class="card">
+  <h3>Effacer les métadonnées avant de partager</h3>
+  <p>Photos (position GPS, appareil), PDF et documents bureautiques (auteur, logiciel) contiennent des
+  informations cachées. <strong>Metadata Cleaner</strong> : ajouter les fichiers, puis <em>Nettoyer</em>.
+  En terminal : <code>mat2 fichier.jpg</code> (crée <code>fichier.cleaned.jpg</code>).</p>
+  </div>
+
+  <div class="card">
+  <h3>Vérifier un fichier téléchargé</h3>
+  <p><strong>GtkHash</strong> calcule l'empreinte SHA-256 d'un fichier, à comparer avec celle publiée
+  par l'auteur.</p>
+  </div>
+
+  <div class="card">
+  <h3>Mots de passe</h3>
+  <p><strong>KeePassXC</strong> génère et garde vos mots de passe dans une base chiffrée. Enregistrez
+  la base dans <code>~/Persistant</code> (partition de persistance) pour la conserver.</p>
+  </div>
+
+  <div class="card warn">
+  <h3>Effacement : à savoir</h3>
+  <p>Sur une clé USB ou un SSD, « effacer de façon sûre » (BleachBit, <code>shred</code>) n'est
+  <strong>pas garanti</strong> : le matériel déplace les données. La seule protection fiable est de
+  <strong>chiffrer dès le départ</strong>. EPIVÍOSI lui-même ne garde aucune trace en dehors de
+  <code>~/Persistant</code> : il suffit de redémarrer.</p>
+  </div>
+
+  <div class="card">
+  <h3>Documentation hors-ligne</h3>
+  <p>Avec une connexion, <code>epiviosi-security-docs</code> ajoute à <strong>EPIVÍOSI WIKI</strong>
+  (≈ 0,8 Go) : <em>Information Security</em> et <em>Cryptography</em> (questions-réponses
+  Stack Exchange) et <em>The OpSec Bible</em>, en anglais. Ensuite :
+  <a href="http://127.0.0.1:8080/">ouvrir la bibliothèque</a>.</p>
+  </div>
+  </section>
+
+  <section id="en" lang="en">
+  <h2>English</h2>
+
+  <div class="card">
+  <h3>Create an encrypted USB stick or disk</h3>
+  <ol>
+    <li>Menu → <strong>Disks</strong> (GNOME Disks), select the drive.</li>
+    <li>Select the partition → ⚙ icon → <strong>Format Partition…</strong></li>
+    <li>Type: <strong>Internal disk for use with Linux systems only (Ext4)</strong>
+      and tick <strong>Password protect volume (LUKS)</strong>.</li>
+    <li>Pick a long passphrase (several words) and confirm.</li>
+  </ol>
+  <p>When plugged in, the file manager asks for the passphrase. Command line: <code>cryptsetup</code>.</p>
+  </div>
+
+  <div class="card">
+  <h3>Encrypt a file or folder</h3>
+  <ul>
+    <li><strong>Picocrypt</strong> (simplest): drop the file, choose a password, <em>Encrypt</em>.
+      Produces a <code>.pcv</code> file, decrypted with Picocrypt.</li>
+    <li><strong>GPA</strong> (GnuPG): encrypt for someone with their public key, or sign.</li>
+    <li><strong>age</strong>, in a terminal: <code>age -p -o secret.age file</code> then
+      <code>age -d -o file secret.age</code>.</li>
+  </ul>
+  </div>
+
+  <div class="card">
+  <h3>Remove metadata before sharing</h3>
+  <p>Photos (GPS location, camera), PDFs and office documents (author, software) hold hidden
+  information. <strong>Metadata Cleaner</strong>: add files, then <em>Clean</em>.
+  Terminal: <code>mat2 file.jpg</code> (creates <code>file.cleaned.jpg</code>).</p>
+  </div>
+
+  <div class="card">
+  <h3>Verify a downloaded file</h3>
+  <p><strong>GtkHash</strong> computes a file's SHA-256 checksum, to compare with the one published
+  by its author.</p>
+  </div>
+
+  <div class="card">
+  <h3>Passwords</h3>
+  <p><strong>KeePassXC</strong> generates and keeps your passwords in an encrypted database. Save it
+  in <code>~/Persistant</code> (persistence partition) to keep it.</p>
+  </div>
+
+  <div class="card warn">
+  <h3>Deletion: good to know</h3>
+  <p>On USB sticks and SSDs, “secure deletion” (BleachBit, <code>shred</code>) is <strong>not
+  guaranteed</strong>: the hardware moves data around. The only reliable protection is to
+  <strong>encrypt from the start</strong>. EPIVÍOSI itself keeps nothing outside
+  <code>~/Persistant</code>: just reboot.</p>
+  </div>
+
+  <div class="card">
+  <h3>Offline documentation</h3>
+  <p>While online, <code>epiviosi-security-docs</code> adds to <strong>EPIVÍOSI WIKI</strong>
+  (≈ 0.8 GB): <em>Information Security</em> and <em>Cryptography</em> (Stack Exchange Q&amp;A) and
+  <em>The OpSec Bible</em>. Then: <a href="http://127.0.0.1:8080/">open the library</a>.</p>
+  </div>
+  </section>
+</main>
+</body>
+</html>
